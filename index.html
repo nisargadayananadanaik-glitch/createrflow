@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreatorFlow | Content Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Creator<span>Flow</span></h1>
+    <p>Your content. Your calendar. Your growth.</p>
+  </header>
+
+  <main>
+<section class="panel ai-panel">
+  <h2>✨ AI Content Assistant</h2>
+  <p class="analytics-subtitle">
+    Turn your ideas into captions, hashtags and content drafts.
+  </p>
+
+  <form id="aiContentForm">
+    <label for="aiTopic">What is your content about? *</label>
+    <textarea id="aiTopic" rows="3" required
+      placeholder="Example: My journey learning web development"></textarea>
+
+    <label for="aiPlatform">Social Media Platform</label>
+    <select id="aiPlatform">
+      <option value="Instagram">Instagram</option>
+      <option value="YouTube">YouTube</option>
+      <option value="Facebook">Facebook</option>
+      <option value="LinkedIn">LinkedIn</option>
+    </select>
+
+    <label for="aiTone">Choose a tone</label>
+    <select id="aiTone">
+      <option value="Friendly">Friendly</option>
+      <option value="Professional">Professional</option>
+      <option value="Funny">Funny</option>
+      <option value="Motivational">Motivational</option>
+    </select>
+
+    <label for="aiType">What would you like to generate?</label>
+    <select id="aiType">
+      <option value="all">Everything</option>
+      <option value="caption">Caption Ideas</option>
+      <option value="hashtags">Hashtags</option>
+      <option value="ideas">Content Topics</option>
+      <option value="description">Draft Description</option>
+    </select>
+
+    <button type="submit">✨ Generate Content</button>
+  </form>
+
+  <div id="aiMessage" role="status" aria-live="polite"></div>
+
+  <div id="aiResults" hidden>
+    <div class="ai-result-card" data-result="caption">
+      <h3>📝 Caption Ideas</h3>
+      <div id="aiCaptions"></div>
+      <button type="button" data-copy="aiCaptions">Copy Captions</button>
+    </div>
+
+    <div class="ai-result-card" data-result="hashtags">
+      <h3>#️⃣ Hashtags</h3>
+      <p id="aiHashtags"></p>
+      <button type="button" data-copy="aiHashtags">Copy Hashtags</button>
+    </div>
+
+    <div class="ai-result-card" data-result="ideas">
+      <h3>💡 Content Topics</h3>
+      <div id="aiIdeas"></div>
+      <button type="button" data-copy="aiIdeas">Copy Topics</button>
+    </div>
+
+    <div class="ai-result-card" data-result="description">
+      <h3>📄 Draft Description</h3>
+      <p id="aiDescription"></p>
+      <button type="button" data-copy="aiDescription">Copy Description</button>
+    </div>
+
+    <button type="button" id="aiUseCaption">
+      Use Caption in Content Planner
+    </button>
+  </div>
+</section>
+    
+<section class="panel finance-panel">
+  <h2>💰 Finance Tracker</h2>
+  <p class="analytics-subtitle">
+    Track your creator income, expenses and pending payments.
+  </p>
+
+  <div class="finance-stats">
+    <div class="stat-card">
+      <p>Total Income Received</p>
+      <h3 id="finIncome">₹0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Total Expenses</p>
+      <h3 id="finExpenses">₹0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Net Profit</p>
+      <h3 id="finProfit">₹0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Pending Brand Payments</p>
+      <h3 id="finPending">₹0</h3>
+    </div>
+  </div>
+
+  <h3 id="finFormHeading">Add Transaction</h3>
+
+  <form id="financeForm">
+    <input type="hidden" id="finId">
+
+    <label for="finType">Transaction Type *</label>
+    <select id="finType" required>
+      <option value="Income">Income</option>
+      <option value="Expense">Expense</option>
+    </select>
+
+    <label for="finDescription">Description *</label>
+    <input id="finDescription" required
+      placeholder="e.g. Brand collaboration payment">
+
+    <label for="finCategory">Category *</label>
+    <select id="finCategory" required>
+      <option value="Brand Deal">Brand Deal</option>
+      <option value="Sponsorship">Sponsorship</option>
+      <option value="Affiliate">Affiliate Income</option>
+      <option value="Other Income">Other Income</option>
+      <option value="Equipment">Equipment</option>
+      <option value="Software">Software</option>
+      <option value="Internet">Internet</option>
+      <option value="Travel">Travel</option>
+      <option value="Editing">Editing</option>
+      <option value="Other Expense">Other Expense</option>
+    </select>
+
+    <label for="finAmount">Amount (₹) *</label>
+    <input id="finAmount" type="number" min="0.01"
+      step="0.01" required placeholder="e.g. 5000">
+
+    <label for="finDate">Transaction Date *</label>
+    <input id="finDate" type="date" required>
+
+    <label for="finNotes">Notes</label>
+    <textarea id="finNotes" rows="2"
+      placeholder="Optional details"></textarea>
+
+    <button type="submit" id="finSaveButton">
+      Save Transaction
+    </button>
+    <button type="button" id="finCancelButton"
+      class="secondary" hidden>Cancel Edit</button>
+  </form>
+
+  <hr>
+
+  <h3>Monthly Summary</h3>
+  <label for="finMonth">Choose Month</label>
+  <input id="finMonth" type="month">
+
+  <div class="finance-monthly">
+    <p>Income: <strong id="finMonthIncome">₹0</strong></p>
+    <p>Expenses: <strong id="finMonthExpenses">₹0</strong></p>
+    <p>Profit: <strong id="finMonthProfit">₹0</strong></p>
+  </div>
+
+  <h3>Transaction History</h3>
+  <input id="finSearch" placeholder="Search transactions...">
+
+  <div class="finance-filters">
+    <select id="finTypeFilter">
+      <option value="All">All Transactions</option>
+      <option value="Income">Income Only</option>
+      <option value="Expense">Expenses Only</option>
+    </select>
+
+    <select id="finCategoryFilter">
+      <option value="All">All Categories</option>
+      <option value="Brand Deal">Brand Deal</option>
+      <option value="Sponsorship">Sponsorship</option>
+      <option value="Affiliate">Affiliate Income</option>
+      <option value="Other Income">Other Income</option>
+      <option value="Equipment">Equipment</option>
+      <option value="Software">Software</option>
+      <option value="Internet">Internet</option>
+      <option value="Travel">Travel</option>
+      <option value="Editing">Editing</option>
+      <option value="Other Expense">Other Expense</option>
+    </select>
+  </div>
+
+  <div id="financeList"></div>
+</section>
+    
+<section class="panel brand-panel">
+  <h2>🤝 Brand Deal Manager</h2>
+  <p class="analytics-subtitle">
+    Manage collaborations, contracts and payments in one place.
+  </p>
+
+  <div class="brand-stats">
+    <div class="stat-card">
+      <p>Total Deals</p>
+      <h3 id="brandTotalDeals">0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Total Deal Value</p>
+      <h3 id="brandTotalValue">₹0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Payments Received</p>
+      <h3 id="brandReceived">₹0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Pending Payments</p>
+      <h3 id="brandPending">₹0</h3>
+    </div>
+  </div>
+
+  <h3 id="brandFormHeading">Add a Brand Deal</h3>
+
+  <form id="brandDealForm">
+    <input type="hidden" id="brandDealId">
+
+    <label for="brandName">Brand Name *</label>
+    <input id="brandName" required placeholder="e.g. TechZone">
+
+    <label for="brandContact">Contact Person</label>
+    <input id="brandContact" placeholder="Contact person's name">
+
+    <label for="brandEmail">Contact Email</label>
+    <input id="brandEmail" type="email"
+      placeholder="brand@example.com">
+
+    <label for="campaignName">Campaign Name *</label>
+    <input id="campaignName" required
+      placeholder="e.g. Smartphone Promotion">
+
+    <label for="campaignStart">Campaign Start Date</label>
+    <input id="campaignStart" type="date">
+
+    <label for="campaignDeadline">Delivery Deadline *</label>
+    <input id="campaignDeadline" type="date" required>
+
+    <label for="dealAmount">Total Deal Amount (₹) *</label>
+    <input id="dealAmount" type="number" min="0"
+      step="0.01" required placeholder="10000">
+
+    <label for="amountReceived">Amount Received (₹)</label>
+    <input id="amountReceived" type="number" min="0"
+      step="0.01" value="0" required>
+
+    <label for="contractStatus">Contract Status</label>
+    <select id="contractStatus">
+      <option>Pending</option>
+      <option>Sent</option>
+      <option>Signed</option>
+      <option>Rejected</option>
+    </select>
+
+    <label for="collabStatus">Collaboration Status</label>
+    <select id="collabStatus">
+      <option>Negotiation</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+      <option>Cancelled</option>
+    </select>
+
+    <label for="brandNotes">Notes</label>
+    <textarea id="brandNotes" rows="3"
+      placeholder="Deliverables, payment terms, meeting notes..."></textarea>
+
+    <button type="submit" id="brandSaveButton">Save Deal</button>
+    <button type="button" id="brandCancelButton"
+      class="secondary" hidden>Cancel Edit</button>
+  </form>
+
+  <hr>
+
+  <h3>Your Collaborations</h3>
+
+  <div class="brand-filters">
+    <input id="brandSearch" placeholder="Search brand or campaign...">
+
+    <select id="brandStatusFilter">
+      <option value="All">All Collaborations</option>
+      <option>Negotiation</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+      <option>Cancelled</option>
+    </select>
+  </div>
+
+  <div id="brandDealList"></div>
+</section>
+    
+<section class="panel analytics-panel">
+  <h2>Analytics Dashboard</h2>
+  <p class="analytics-subtitle">
+    Understand your audience and grow your content.
+  </p>
+
+  <label for="analyticsPlatform">Choose platform</label>
+  <select id="analyticsPlatform">
+    <option value="All">All Platforms</option>
+    <option value="Instagram">Instagram</option>
+    <option value="YouTube">YouTube</option>
+    <option value="Facebook">Facebook</option>
+    <option value="LinkedIn">LinkedIn</option>
+  </select>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <p>Total Views</p>
+      <h3 id="totalViews">0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Total Likes</p>
+      <h3 id="totalLikes">0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Followers</p>
+      <h3 id="totalFollowers">0</h3>
+    </div>
+    <div class="stat-card">
+      <p>Engagement Rate</p>
+      <h3 id="engagementRate">0%</h3>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Views & Likes</h3>
+      <canvas id="performanceChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Platform Views</h3>
+      <canvas id="platformChart"></canvas>
+    </div>
+  </div>
+
+  <h3>Top Performing Content</h3>
+  <div id="topPosts"></div>
+
+  <p class="demo-note">
+    Demo analytics: sample data for demonstration purposes.
+  </p>
+</section>
+    <section class="panel">
+      <h2 id="formHeading">Create a post</h2>
+
+      <form id="postForm">
+        <input type="hidden" id="postId">
+
+        <label for="title">Post title</label>
+        <input id="title" required placeholder="e.g. My coding journey">
+
+        <label for="platform">Platform</label>
+        <select id="platform" required>
+          <option value="Instagram">Instagram</option>
+          <option value="YouTube">YouTube</option>
+          <option value="Facebook">Facebook</option>
+          <option value="LinkedIn">LinkedIn</option>
+        </select>
+
+        <label for="caption">Caption or description</label>
+        <textarea id="caption" rows="3"
+          placeholder="Write your content..."></textarea>
+
+        <label for="date">Schedule date</label>
+        <input type="date" id="date" required>
+
+        <label for="time">Schedule time</label>
+        <input type="time" id="time" required>
+
+        <label for="status">Status</label>
+        <select id="status">
+          <option value="Draft">Draft</option>
+          <option value="Scheduled">Scheduled</option>
+          <option value="Published">Published</option>
+        </select>
+
+        <button type="submit" id="saveButton">Save Post</button>
+        <button type="button" id="cancelButton" class="secondary" hidden>
+          Cancel Edit
+        </button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="calendar-header">
+        <button id="prevMonth" class="secondary" type="button">←</button>
+        <h2 id="monthLabel">Calendar</h2>
+        <button id="nextMonth" class="secondary" type="button">→</button>
+      </div>
+      <div id="calendar" class="calendar"></div>
+    </section>
+
+    <section class="panel">
+      <h2>All Content</h2>
+      <p id="postCount">0 posts</p>
+      <div id="postList"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
